@@ -1,2 +1,8 @@
-# mcthings_extra
-McThings extensions from third party
+# McThings Extra
+
+Extra Things to be used building McThings scenes.
+
+Below [a scene](tests/scene.py) including the extra Thing [Rainbow](mcthings_extra/rainbow.py) with the 
+McThings [Pyramid](https://github.com/juntosdesdecasa/mcthings/blob/develop/mcthings/pyramid.py).
+
+![Rainbow over Pyramid](scene.png)
