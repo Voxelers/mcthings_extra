@@ -55,26 +55,31 @@ class CsvPoints(Thing):
         if not self.file_path:
             RuntimeError("Missing file_path param")
 
-        pos = self.position
-
-        # First approach: put a block in each position. Try to detect blocks that are groups in order
-        # to build them using setBlocks
-
         # In order to explore the data pandas helps with group by and others operations
         df = pd.read_csv(self.file_path, delimiter=",")
         df.columns = ['Level', 'X', 'Z', 'Y']
-        min_height = min(df['Y'])
-        max_height = max(df['Y'])
-        # Work only with Level 0)
+
+        # Limits of the Abadia: (max_x-min_x, max_y-min_y, max_z-min_z) is the size
+        min_y = min(df['Y'])
+        max_y = max(df['Y'])
+        min_x = min(df['X'])
+        max_x = max(df['X'])
+        min_z = min(df['Z'])
+        max_z = max(df['Z'])
+        self._end_position = Vec3(max_x-min_x, max_y-min_y, max_z-min_z)
+
+        # Load each level in a new dataframe
         df0 = df[df['Level'].eq(0)]
         df1 = df[df['Level'].eq(1)]
         df2 = df[df['Level'].eq(2)]
-        # Drop Level column
+
+        # Drop Level column not needed anymore
         df0.drop('Level', axis=1, inplace=True)
         df1.drop('Level', axis=1, inplace=True)
         df2.drop('Level', axis=1, inplace=True)
+
         # Let's analyze the data to find the best way to draw it
-        # It seems that all the data has a range of X for a fixed z and Y
+        # It seems that all the data has a range of X for a fixed Z and Y
         # Let's confirm it using GROUP BY to analyze this Y,Z groups
         #
         # Blocks needed to build the Levels using horizontal columns along X
@@ -82,18 +87,21 @@ class CsvPoints(Thing):
         # total_x_blocks_0 = len(df0.groupby(['Y', 'Z'])['X'].count())  # 828
         # total_x_blocks_1 = len(df1.groupby(['Y', 'Z'])['X'].count())  # 385
         # total_x_blocks_2 = len(df2.groupby(['Y', 'Z'])['X'].count())  # 683
-        # Let's try to start building the Level 1 which is smaller
         # In the next df we have the list of Xs per Y and height. With it we can build one or more blocks
         # along the X-axis
 
-        for name, group in df2.groupby(['Y', 'Z'])['X']:
-            axis_y = name[0]
-            axis_z = name[1]
-            axis_x_list = group.values.tolist()
+        # Working only in level0 yet!
+        for level in [df0, df1, df2]:
+        # for level in [df0]:
+            for name, group in level.groupby(['Y', 'Z'])['X']:
+                axis_y = name[0]
+                axis_z = name[1]
+                axis_x_list_offset = group.values.tolist()
+                axis_x_list = list(map(lambda x: x - min_x, axis_x_list_offset))
 
-            # fixed position in Minecraft or y and z axis
-            y = axis_y - min_height
-            z = axis_z
+                # fixed position in Minecraft or y and z axis
+                y = axis_y - min_y
+                z = axis_z - min_z
 
-            # The blocks along x could be just one or several splitted
-            self.draw_blocks(y, z, axis_x_list)
+                # The blocks along x could be just one or several splitted
+                self.draw_blocks(y, z, axis_x_list)

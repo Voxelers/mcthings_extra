@@ -25,6 +25,7 @@ def main():
         csv_points = CsvPoints(pos)
         csv_points.file_path = "alturas-final.csv"
         csv_points.build()
+        # csv_points.unbuild()
 
     except mcpi.connection.RequestError:
         print("Can't connect to Minecraft server " + MC_SEVER_HOST)
