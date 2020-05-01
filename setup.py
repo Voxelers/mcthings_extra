@@ -18,7 +18,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='mcthings_extra',
-    version='0.0.4',
+    version='0.0.5',
     packages=['mcthings_extra'],
     include_package_data=True,
     license='ASL',
