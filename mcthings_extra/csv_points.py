@@ -28,7 +28,8 @@ class CsvPoints(Thing):
         # Time to draw the blocks (y = height, z = Y are always the same in a group)
         init_y = self.position.y + y
         init_z = self.position.z + z
-        end_y = self.position.y + y
+        # Create walls to the ground
+        end_y = self.position.y
         end_z = self.position.z + z
 
         # To detect splits (not incremental by 1 values) in the series order the x-axis positions
@@ -91,8 +92,8 @@ class CsvPoints(Thing):
         # along the X-axis
 
         # Working only in level0 yet!
-        for level in [df0, df1, df2]:
-        # for level in [df0]:
+        # for level in [df0, df1, df2]:
+        for level in [df0]:
             for name, group in level.groupby(['Y', 'Z'])['X']:
                 axis_y = name[0]
                 axis_z = name[1]
