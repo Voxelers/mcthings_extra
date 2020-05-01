@@ -41,7 +41,8 @@ class CsvPoints(Thing):
                 init_x = self.position.x + init_split_x
                 end_x = self.position.x + axis_x_list[i-1]
 
-                Scene.server.postToChat("Building blocks defined in a CSV file (%s, %s, %s)" % (init_x, init_y, init_z))
+                # Scene.server.postToChat("Building blocks defined in a CSV file (%s, %s, %s)"
+                # % (init_x, init_y, init_z))
                 Scene.server.setBlocks(init_x, init_y, init_z,
                                        end_x, end_y, end_z,
                                        self.block)
