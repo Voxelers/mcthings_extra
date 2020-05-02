@@ -35,21 +35,20 @@ class CsvPoints(Thing):
         # To detect splits (not incremental by 1 values) in the series order the x-axis positions
         axis_x_list.sort()
         init_split_x = axis_x_list[0]
-        for i in range(1, len(axis_x_list) + 1):
-            if ((i < len(axis_x_list) and (axis_x_list[i] - axis_x_list[i-1])) > 1 or
-                    (i == len(axis_x_list))):
+
+        for i in range(1, len(axis_x_list)):
+            if (axis_x_list[i] - axis_x_list[i-1]) > 1:
                 init_x = self.position.x + init_split_x
                 end_x = self.position.x + axis_x_list[i-1]
-
-                Scene.server.postToChat("Building blocks defined in a CSV file (%s, %s, %s)" % (init_x, init_y, init_z))
-                Scene.server.setBlocks(init_x, init_y, init_z,
-                                       end_x, end_y, end_z,
-                                       self.block)
-
-                if i == len(axis_x_list):
-                    break
+                Scene.server.postToChat("Building blocks defined in a CSV file (%s, %s, %s)"
+                                        % (init_x, init_y, init_z))
+                Scene.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
 
                 init_split_x = axis_x_list[i]
+
+        init_x = self.position.x + init_split_x
+        end_x = self.position.x + axis_x_list[-1]
+        Scene.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
 
     def build(self):
         # Read the CSV file
