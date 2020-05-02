@@ -5,6 +5,8 @@ import pandas as pd
 from mcthings.thing import Thing
 from mcthings.scene import Scene
 
+ABADIA_LEVEL_HEIGHT = 16
+
 
 class CsvPoints(Thing):
     """
@@ -90,7 +92,7 @@ class CsvPoints(Thing):
         # In the next df we have the list of Xs per Y and height. With it we can build one or more blocks
         # along the X-axis
 
-        # Working only in level0 yet!
+        level_height = 0
         # for level in [df0, df1, df2]:
         for level in [df0]:
             for name, group in level.groupby(['Y', 'Z'])['X']:
@@ -100,8 +102,10 @@ class CsvPoints(Thing):
                 axis_x_list = list(map(lambda x: x - min_x, axis_x_list_offset))
 
                 # fixed position in Minecraft or y and z axis
-                y = axis_y - min_y
+                y = axis_y - min_y + level_height
                 z = axis_z - min_z
 
                 # The blocks along x could be just one or several splitted
                 self.draw_blocks(y, z, axis_x_list)
+
+            level_height += ABADIA_LEVEL_HEIGHT
