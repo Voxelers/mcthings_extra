@@ -18,20 +18,21 @@ class CsvPoints(Thing):
     level = "0"
     """ Which level to read """
 
-    def draw_blocks(self, y, z, axis_x_list):
+    def draw_blocks(self, y, z, axis_x_list, level_height):
         """
 
         :param y: blocks y-axis position
         :param z: blocks z-axis position
         :param axis_x_list: list of x-axis in which a block must exist
+        :param level_height: height in which blocks are built
         :return:
         """
 
         # Time to draw the blocks (y = height, z = Y are always the same in a group)
         init_y = self.position.y + y
         init_z = self.position.z + z
-        # Create walls to the ground
-        end_y = self.position.y
+        # Create walls to the level_height
+        end_y = self.position.y + level_height
         end_z = self.position.z + z
 
         # To detect splits (not incremental by 1 values) in the series order the x-axis positions
@@ -93,8 +94,7 @@ class CsvPoints(Thing):
         # along the X-axis
 
         level_height = 0
-        # for level in [df0, df1, df2]:
-        for level in [df0]:
+        for level in [df0, df1, df2]:
             for name, group in level.groupby(['Y', 'Z'])['X']:
                 axis_y = name[0]
                 axis_z = name[1]
@@ -106,6 +106,6 @@ class CsvPoints(Thing):
                 z = axis_z - min_z
 
                 # The blocks along x could be just one or several splitted
-                self.draw_blocks(y, z, axis_x_list)
+                self.draw_blocks(y, z, axis_x_list, level_height)
 
             level_height += ABADIA_LEVEL_HEIGHT
