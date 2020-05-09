@@ -24,15 +24,9 @@ def main():
 
         schematic = Schematic(pos)
         # 2012: https://www.minecraft-schematics.com/schematic/68/
-        schematic.file_path = "pirate-boat.schematic"
-        # 2014
-        # schematic.file_path = "viking-boat.schematic"
-        # 2016
-        # schematic.file_path = "us-navy-pbr-naval.schematic"
-        # 2018
-        # schematic.file_path = "trawler-fishing.schematic"
-        # 2020
-        # schematic.file_path = "one-chunk-drakkar.schematic"
+        schematic.file_path = "schematics/pirate-boat.schematic"
+        # 2017: https://www.minecraft-schematics.com/schematic/9676/
+        # schematic.file_path = "schematics/chateau-fairmont.schematic"
         schematic.build()
 
     except mcpi.connection.RequestError:
