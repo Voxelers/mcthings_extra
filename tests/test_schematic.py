@@ -26,7 +26,8 @@ def main():
         # 2012: https://www.minecraft-schematics.com/schematic/68/
         schematic.file_path = "schematics/pirate-boat.schematic"
         # 2017: https://www.minecraft-schematics.com/schematic/9676/
-        # schematic.file_path = "schematics/chateau-fairmont.schematic"
+        schematic.file_path = "schematics/chateau-fairmont.schematic"
+        # schematic.file_path = "schematics/palace-of-khalduun.schematic"
         schematic.build()
 
     except mcpi.connection.RequestError:
