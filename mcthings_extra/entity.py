@@ -10,7 +10,7 @@ from ._version import __version__
 class Entity:
     entity = mcpi.entity.BAT
 
-    def __init__(self, position):
+    def __init__(self, position=None):
         """
         Create a entity
         :param position: spawn position
@@ -42,3 +42,20 @@ class Entity:
     def unbuild(self):
         """ An entity can not be unbuilt """
         pass
+
+    def populate(self, thing):
+        """
+        Populate a thing (Thing) with this entity
+
+        :param thing: Thing to be populated
+        :return:
+        """
+
+        margin = 3
+
+        p = thing.position
+        self._position = p
+        Scene.server.spawnEntity(p.x + margin,
+                                 p.y,
+                                 p.z + margin,
+                                 self.entity)
