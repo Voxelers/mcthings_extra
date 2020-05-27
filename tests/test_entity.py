@@ -8,10 +8,11 @@ import sys
 import mcpi.block
 import mcpi.entity
 from mcpi.vec3 import Vec3
+from mcthings.decorators.light_decorator import LightDecorator
 from mcthings.house import House
 from mcthings.server import Server
 
-from mcthings_extra.entity import Entity
+from mcthings_extra.decorators.villager_decorator import VillagerDecorator
 
 BUILDER_NAME = "ElasticExplorer"
 
@@ -33,9 +34,10 @@ def main():
         house.length = 10
         house.build()
 
-        entity = Entity(Vec3(pos.x + 5, pos.y+10, pos.z))
-        entity.entity = mcpi.entity.VILLAGER
-        entity.populate(house)
+        house.add_decorator(VillagerDecorator)
+        house.add_decorator(LightDecorator)
+
+        house.decorate()
 
     except mcpi.connection.RequestError:
         print("Can't connect to Minecraft server " + MC_SEVER_HOST)

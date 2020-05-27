@@ -20,10 +20,7 @@ class Entity:
         if position:
             self._position = mcpi.vec3.Vec3(position.x, position.y, position.z)
 
-        # Add the entity to the scene
-        Scene.add(self)
-
-        # McThing version which created this Thing
+        # McThing Extras version which created this Thing
         self._version = __version__
 
     @property
@@ -42,20 +39,3 @@ class Entity:
     def unbuild(self):
         """ An entity can not be unbuilt """
         pass
-
-    def populate(self, thing):
-        """
-        Populate a thing (Thing) with this entity
-
-        :param thing: Thing to be populated
-        :return:
-        """
-
-        margin = 3
-
-        p = thing.position
-        self._position = p
-        Scene.server.spawnEntity(p.x + margin,
-                                 p.y,
-                                 p.z + margin,
-                                 self.entity)
