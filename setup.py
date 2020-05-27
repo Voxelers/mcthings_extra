@@ -46,7 +46,7 @@ setup(
     ],
     install_requires=[
         'mcpi >= 1.2.0',
-        'mcthings >= 0.5.3',
+        'mcthings >= 0.31.1',
         'pandas',
         'nbt'
     ],
