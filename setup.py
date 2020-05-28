@@ -25,7 +25,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='mcthings_extra',
     version=version,
-    packages=['mcthings_extra'],
+    packages=['mcthings_extra', 'mcthings_extra.decorators'],
     include_package_data=True,
     license='ASL',
     description='Additional Things for the McThings Python library',
