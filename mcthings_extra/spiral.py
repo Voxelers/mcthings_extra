@@ -4,6 +4,7 @@
 from mcpi.vec3 import Vec3
 from mcthings.scene import Scene
 from mcthings.thing import Thing
+from mcthings.world import World
 
 
 class Spiral(Thing):
@@ -12,7 +13,7 @@ class Spiral(Thing):
     height = 10
 
     def build(self):
-        mc = Scene.server
+        mc = World.server
 
         size = 10
         height = 3

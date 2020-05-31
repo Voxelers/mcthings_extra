@@ -7,6 +7,7 @@ from math import *
 
 # Based on Rainbow code written by zhuowei and retrieved from URL below:
 # http://www.minecraftforum.net/topic/1638036-my-first-script-for-minecraft-pi-api-a-rainbow/
+from mcthings.world import World
 
 colors = [14, 1, 4, 5, 3, 11, 10]
 
@@ -18,7 +19,7 @@ class Rainbow(Thing):
     block = block.WOOL.id
 
     def build(self):
-        mc = Scene.server
+        mc = World.server
         mc.setBlocks(-64, 0, 0, 64, self.height + len(colors), 0, 0)
         for x in range(0, 128):
             for color in range(0, len(colors)):

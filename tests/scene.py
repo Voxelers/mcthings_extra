@@ -6,6 +6,7 @@ import mcpi.minecraft
 from mcthings.scene import Scene
 from mcthings.pyramid import Pyramid
 from mcthings.server import Server
+from mcthings.world import World
 
 from mcthings_extra.rainbow import Rainbow
 
@@ -19,10 +20,10 @@ MC_SEVER_PORT = 4711
 
 def main():
     try:
-        server = Server(MC_SEVER_HOST, MC_SEVER_PORT)
+        World.connect(Server(MC_SEVER_HOST, MC_SEVER_PORT))
 
-        server.mc.postToChat("Building a rainbow")
-        pos = server.mc.entity.getTilePos(server.mc.getPlayerEntityId(BUILDER_NAME))
+        World.server.postToChat("Building a rainbow")
+        pos = World.server.entity.getTilePos(World.server.getPlayerEntityId(BUILDER_NAME))
         pos.z -= 20
 
         pyr = Pyramid(pos)
@@ -31,7 +32,7 @@ def main():
         rainbow = Rainbow(pyr.end_position)
         rainbow.build()
 
-        Scene.save("scene_rainbow.mct")
+        World.scenes[0].save("scene_rainbow.mct")
 
     except mcpi.connection.RequestError:
         print("Can't connect to Minecraft server " + MC_SEVER_HOST)

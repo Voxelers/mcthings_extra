@@ -11,6 +11,7 @@ from mcpi.vec3 import Vec3
 from mcthings.decorators.light_decorator import LightDecorator
 from mcthings.house import House
 from mcthings.server import Server
+from mcthings.world import World
 
 from mcthings_extra.decorators.villager_decorator import VillagerDecorator
 
@@ -22,10 +23,10 @@ MC_SEVER_PORT = 4711
 
 def main():
     try:
-        server = Server(MC_SEVER_HOST, MC_SEVER_PORT)
+        World.connect(Server(MC_SEVER_HOST, MC_SEVER_PORT))
 
-        server.mc.postToChat("Spawning entities in Minecraft")
-        pos = server.mc.entity.getTilePos(server.mc.getPlayerEntityId(BUILDER_NAME))
+        World.server.postToChat("Spawning entities in Minecraft")
+        pos = World.server.entity.getTilePos(World.server.getPlayerEntityId(BUILDER_NAME))
 
         # Let's create a Scene and populate it with Entities
         house = House(Vec3(pos.x + 5, pos.y, pos.z))

@@ -6,6 +6,8 @@ import mcpi.entity
 from mcthings.scene import Scene
 from ._version import __version__
 
+from mcthings.world import World
+
 
 class Entity:
     entity = mcpi.entity.BAT
@@ -29,7 +31,7 @@ class Entity:
         return self._position
 
     def spawn(self):
-        Scene.server.spawnEntity(self.position.x, self.position.y,
+        World.server.spawnEntity(self.position.x, self.position.y,
                                  self.position.z, self.entity)
 
     def build(self):

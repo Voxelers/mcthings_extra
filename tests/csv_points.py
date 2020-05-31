@@ -2,7 +2,7 @@ import sys
 
 import mcpi.block
 import mcpi.minecraft
-
+from mcthings.world import World
 
 from mcthings_extra.csv_points import CsvPoints
 from mcthings.server import Server
@@ -16,10 +16,10 @@ MC_SEVER_PORT = 4711
 
 def main():
     try:
-        server = Server(MC_SEVER_HOST, MC_SEVER_PORT)
+        World.connect(Server(MC_SEVER_HOST, MC_SEVER_PORT))
 
-        server.mc.postToChat("Building blocks defined in a CSV file")
-        pos = server.mc.entity.getTilePos(server.mc.getPlayerEntityId(BUILDER_NAME))
+        World.server.postToChat("Building blocks defined in a CSV file")
+        pos = World.server.entity.getTilePos(World.server.getPlayerEntityId(BUILDER_NAME))
 
         pos.z += 1
         csv_points = CsvPoints(pos)

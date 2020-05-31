@@ -4,6 +4,7 @@ import pandas as pd
 
 from mcthings.thing import Thing
 from mcthings.scene import Scene
+from mcthings.world import World
 
 ABADIA_LEVEL_HEIGHT = 16
 
@@ -43,15 +44,15 @@ class CsvPoints(Thing):
             if (axis_x_list[i] - axis_x_list[i-1]) > 1:
                 init_x = self.position.x + init_split_x
                 end_x = self.position.x + axis_x_list[i-1]
-                Scene.server.postToChat("Building blocks defined in a CSV file (%s, %s, %s)"
+                World.server.postToChat("Building blocks defined in a CSV file (%s, %s, %s)"
                                         % (init_x, init_y, init_z))
-                Scene.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
+                World.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
 
                 init_split_x = axis_x_list[i]
 
         init_x = self.position.x + init_split_x
         end_x = self.position.x + axis_x_list[-1]
-        Scene.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
+        World.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
 
     def build(self):
         # Read the CSV file
