@@ -1,7 +1,9 @@
 # Licensed under the terms of http://www.apache.org/licenses/LICENSE-2.0
 # Author (©): Alvaro del Castillo
+import logging
 
 import mcpi.entity
+from mcpi.connection import RequestError
 
 from mcthings.scene import Scene
 from ._version import __version__
@@ -31,8 +33,11 @@ class Entity:
         return self._position
 
     def spawn(self):
-        World.server.spawnEntity(self.position.x, self.position.y,
-                                 self.position.z, self.entity)
+        try:
+            World.server.spawnEntity(self.position.x, self.position.y,
+                                     self.position.z, self.entity)
+        except RequestError:
+            logging.debug("Server can not spawn entities")
 
     def build(self):
         """ Share this API with Thing so Scene can recreate more easily the scenes """
