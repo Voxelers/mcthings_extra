@@ -18,16 +18,15 @@ class VillagerDecorator(Decorator):
     Add a villager to Thing
     """
 
-    @classmethod
-    def decorate(cls, thing):
+    def decorate(self):
         """
         Add a villager in the center of the Thing
 
         :return:
         """
 
-        thing_end = thing.end_position
-        thing_start = thing.position
+        thing_end = self._thing.end_position
+        thing_start = self._thing.position
 
         center_pos_x = thing_start.x + math.floor((thing_end.x - thing_start.x) / 2)
         center_pos_y = thing_start.y + math.floor((thing_end.y - thing_start.y) / 2)

@@ -2,20 +2,17 @@
 # Author/s (©): Familia de Lorenzo
 
 from mcpi.vec3 import Vec3
-from mcthings.scene import Scene
 from mcthings.thing import Thing
-from mcthings.world import World
 
 
-class StairsSnail(Thing):
+class UShapedStairs(Thing):
     """ Create snail stairs with sections including steps of width """
 
     sections = 3
     steps = 5
     width = 5
 
-    def build(self):
-        mc = World.server
+    def create(self):
 
         direction = 0
 
@@ -27,18 +24,20 @@ class StairsSnail(Thing):
             if direction == 0:
                 for eje_y in range(0, self.steps, 1):
                     for eje_x in range(0, self.width, 1):
-                        mc.setBlock((init_x + eje_x),
-                                    ((self.steps * section) + init_y + eje_y),
-                                    (init_z + eje_y) + (direction * self.steps),
-                                    self.block)
+                        self.set_block(Vec3(
+                            (init_x + eje_x),
+                            ((self.steps * section) + init_y + eje_y),
+                            (init_z + eje_y) + (direction * self.steps)
+                        ), self.block.id)
                 direction = 1
             elif direction == 1:
                 for eje_y in range(0, self.steps, 1):
                     for eje_x in range(0, self.width, 1):
-                        mc.setBlock((init_x + eje_x + self.width),
-                                    ((self.steps * section) + init_y + eje_y),
-                                    (init_z - eje_y - 1) + (direction * self.steps),
-                                    self.block)
+                        self.set_block(Vec3(
+                            (init_x + eje_x + self.width),
+                            ((self.steps * section) + init_y + eje_y),
+                            (init_z - eje_y - 1) + (direction * self.steps)
+                        ), self.block.id)
                 direction = 0
 
         end_x = init_x + 2 * self.width

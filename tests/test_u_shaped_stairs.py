@@ -1,42 +1,39 @@
+#!/usr/bin/env python3
+
+# Licensed under the terms of http://www.apache.org/licenses/LICENSE-2.0
+# Author (©): Alvaro del Castillo
+import logging
 import sys
+import unittest
 
 import mcpi.block
 import mcpi.minecraft
-from mcthings.renderers.raspberry_pi import RaspberryPi
-
-from mcthings.server import Server
 from mcthings.world import World
+
+from tests.base import TestBaseThing
 
 from mcthings_extra.u_shaped_stairs import UShapedStairs
 
-BUILDER_NAME = "ElasticExplorer"
 
-MC_SEVER_HOST = "localhost"
-MC_SEVER_PORT = 4711
+class TestUShapedStairs(TestBaseThing):
+    """Test UShapedStairs Thing"""
 
+    def test_build(self):
+        World.renderer.post_to_chat("Building u shaped stairs")
 
-def main():
-    try:
-        renderer = RaspberryPi(MC_SEVER_HOST, MC_SEVER_PORT)
+        self.pos.z -= 1
 
-        renderer.server._mc.postToChat("Building stairs")
-        pos = World.server.entity.getTilePos(World.server.getPlayerEntityId(BUILDER_NAME))
-        pos.z -= 1
-
-        stairs = UShapedStairs(pos)
+        stairs = UShapedStairs(self.pos)
         stairs.sections = 4
         stairs.steps = 2
         stairs.width = 3
         stairs.block = mcpi.block.IRON_BLOCK
         stairs.build()
 
-        World.server.entity.setTilePos(World.server.getPlayerEntityId(BUILDER_NAME),
-                                       stairs.end_position)
-
-    except mcpi.connection.RequestError:
-        print("Can't connect to Minecraft server " + MC_SEVER_HOST)
+        mc = World.renderer.server.mc
+        mc.entity.setTilePos(mc.getPlayerEntityId(self.BUILDER_NAME), stairs.end_position)
 
 
 if __name__ == "__main__":
-    main()
-    sys.exit(0)
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+    unittest.main(warnings='ignore')

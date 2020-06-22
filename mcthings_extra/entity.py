@@ -14,7 +14,7 @@ from mcthings.world import World
 class Entity:
     entity = mcpi.entity.BAT
 
-    def __init__(self, position=None):
+    def __init__(self, position):
         """
         Create a entity
         :param position: spawn position
@@ -34,8 +34,9 @@ class Entity:
 
     def spawn(self):
         try:
-            World.server.spawnEntity(self.position.x, self.position.y,
-                                     self.position.z, self.entity)
+            World.renderer.server.mc.spawnEntity(
+                self.position.x, self.position.y,
+                self.position.z, self.entity)
         except RequestError:
             logging.debug("Server can not spawn entities")
 

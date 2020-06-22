@@ -3,7 +3,6 @@ from mcpi.vec3 import Vec3
 import pandas as pd
 
 from mcthings.thing import Thing
-from mcthings.scene import Scene
 from mcthings.world import World
 
 ABADIA_LEVEL_HEIGHT = 16
@@ -44,17 +43,21 @@ class CsvPoints(Thing):
             if (axis_x_list[i] - axis_x_list[i-1]) > 1:
                 init_x = self.position.x + init_split_x
                 end_x = self.position.x + axis_x_list[i-1]
-                World.server.postToChat("Building blocks defined in a CSV file (%s, %s, %s)"
-                                        % (init_x, init_y, init_z))
-                World.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
+                World.renderer.post_to_chat("Building blocks defined in a CSV file (%s, %s, %s)"
+                                            % (init_x, init_y, init_z))
+                self.set_blocks(Vec3(init_x, init_y, init_z),
+                                Vec3(end_x, end_y, end_z),
+                                self.block.id)
 
                 init_split_x = axis_x_list[i]
 
         init_x = self.position.x + init_split_x
         end_x = self.position.x + axis_x_list[-1]
-        World.server.setBlocks(init_x, init_y, init_z, end_x, end_y, end_z, self.block)
+        self.set_blocks(Vec3(init_x, init_y, init_z),
+                        Vec3(end_x, end_y, end_z),
+                        self.block.id)
 
-    def build(self):
+    def create(self):
         # Read the CSV file
         if not self.file_path:
             RuntimeError("Missing file_path param")
