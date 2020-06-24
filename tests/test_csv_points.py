@@ -16,11 +16,11 @@ class TestCsvPoints(TestBaseThing):
     """Test CsvPoints Thing"""
 
     # TODO: Disable until set_blocks restrictions are removed
-    def off_test_build(self):
+    def test_build(self):
         World.renderer.post_to_chat("Building blocks defined in a CSV file")
 
         self.pos.z += 1
-        csv_points = CsvPoints(self.pos, self.renderer)
+        csv_points = CsvPoints(self.pos)
         csv_points.file_path = "data/alturas-final.csv"
         csv_points.build()
         # csv_points.unbuild()

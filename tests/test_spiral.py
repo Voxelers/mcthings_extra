@@ -19,7 +19,7 @@ class TestSpiral(TestBaseThing):
     """Test Spiral Thing"""
 
     # TODO: Disable until set_blocks restrictions are removed
-    def off_test_build(self):
+    def test_build(self):
         World.renderer.post_to_chat("Building a spiral")
         self.pos.z -= 1
 
