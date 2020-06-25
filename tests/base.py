@@ -26,6 +26,5 @@ class TestBaseThing(unittest.TestCase):
         World.renderer = RaspberryPi(cls.MC_SEVER_HOST, cls.MC_SEVER_PORT)
 
     def setUp(self):
-        server = World.renderer.server
-        self.pos = server.mc.entity.getTilePos(server.mc.getPlayerEntityId(self.BUILDER_NAME))
+        self.pos = World.renderer.get_pos(self.BUILDER_NAME)
 
